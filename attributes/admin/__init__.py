@@ -27,6 +27,7 @@ class ProductAttrAdmin(_get_product_attr_admin_base_class()):
         'is_visible', 'is_filter']
     search_fields = ['name', 'slug']
     list_filter = ['categories', 'type', 'is_required']
+    filter_horizontal = ['categories']
 
     def get_category_list(self, item):
         return ', '.join([c.name for c in item.categories.all()])
