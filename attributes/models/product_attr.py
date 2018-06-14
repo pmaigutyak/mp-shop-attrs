@@ -3,6 +3,7 @@ from django.apps import apps
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from attributes.models.product_attr_value import ProductAttrValue
 from attributes.constants import ATTR_TYPE_TEXT, ATTR_TYPE_SELECT, ATTR_TYPES
 
 
@@ -78,15 +79,28 @@ class ProductAttr(models.Model):
 
     def save_value(self, product, value):
 
-        value_obj, c = product.attr_values.get_or_create(attr=self)
+        try:
+            val_obj = ProductAttrValue.objects.get(product=product, attr=self)
 
-        if value is None or value == '':
-            value_obj.delete()
-            return
+            if not value:
+                val_obj.delete()
+                return None
 
-        if value != value_obj.value:
-            value_obj.value = value
-            value_obj.save()
+            val_obj.value = value
+            val_obj.save()
+
+            return val_obj
+
+        except ProductAttrValue.DoesNotExist:
+
+            if not value:
+                return None
+
+            val_obj = ProductAttrValue(product=product, attr=self)
+            val_obj.value = value
+            val_obj.save()
+
+            return val_obj
 
     class Meta:
         ordering = ['name']
