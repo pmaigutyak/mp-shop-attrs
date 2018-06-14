@@ -32,17 +32,25 @@ class ProductAttrOptionInline():
 class ProductAttrForm(forms.ModelForm):
 
     def clean_slug(self):
-        slug = self.cleaned_data.get('slug')
 
-        if slug:
-            return slug
+        data = self.cleaned_data
 
-        name = self.cleaned_data.get('name_%s' % settings.LANGUAGE_CODE)
+        if data.get('slug'):
+            return data['slug']
+
+        if apps.is_installed('modeltranslation'):
+            name = data.get('name_{}'.format(settings.LANGUAGE_CODE))
+        else:
+            name = data.get('name')
+
         return slugify_url(name, separator='_')
 
     class Meta:
         model = ProductAttr
-        fields = '__all__'
+        fields = [
+            'categories', 'name', 'slug', 'type', 'is_required', 'is_visible',
+            'is_filter'
+        ]
 
 
 class ProductFormMixin(object):

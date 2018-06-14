@@ -32,6 +32,10 @@ class ProductAttr(models.Model):
         'products.ProductCategory', related_name='attributes', blank=True,
         verbose_name=_("Product categories"))
 
+    products = models.ManyToManyField(
+        'products.Product', through='ProductAttributeValue',
+        verbose_name=_("Products"))
+
     name = models.CharField(_('Name'), max_length=128)
 
     slug = models.CharField(_('Code'), max_length=255, db_index=True,
@@ -60,7 +64,7 @@ class ProductAttr(models.Model):
 
     @property
     def full_slug(self):
-        return 'attr_%s' % self.slug
+        return 'attr_' + self.slug
 
     def __str__(self):
         return self.name
