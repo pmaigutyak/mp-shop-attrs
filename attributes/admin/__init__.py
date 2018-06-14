@@ -42,6 +42,10 @@ class ProductAttrAdmin(_get_product_attr_admin_base_class()):
 
 class ProductAdminMixin(object):
 
+    """
+    Workaround of django admin form dynamically loaded fields bug.
+    Dynamically loaded fields should be registered in ModelAdmin.fields attr.
+    """
     def render_change_form(self, request, context, **kwargs):
 
         form = context['adminform'].form
