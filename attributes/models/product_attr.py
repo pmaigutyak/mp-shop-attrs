@@ -1,4 +1,5 @@
 
+from django.apps import apps
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -35,7 +36,9 @@ class ProductAttrValueManager(models.Manager):
 class ProductAttr(models.Model):
 
     categories = models.ManyToManyField(
-        'products.ProductCategory', related_name='attributes', blank=True,
+        apps.get_app_config('attributes').product_category_model,
+        related_name='attributes',
+        blank=True,
         verbose_name=_("Product categories"))
 
     name = models.CharField(_('Name'), max_length=128)

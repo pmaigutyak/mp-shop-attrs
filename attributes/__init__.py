@@ -11,5 +11,8 @@ class AttributesAppConfig(AppConfig):
     name = 'attributes'
     verbose_name = _('Attributes')
 
+    product_model = 'products.Product'
+    product_category_model = 'products.ProductCategory'
+
 
 default_app_config = 'attributes.AttributesAppConfig'

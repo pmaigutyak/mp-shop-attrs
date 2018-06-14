@@ -1,4 +1,5 @@
 
+from django.apps import apps
 from django.db import models
 from django.utils import six
 from django.utils.translation import ugettext_lazy as _
@@ -40,11 +41,13 @@ class ProductAttrValueManager(models.Manager):
 class ProductAttrValue(models.Model):
 
     attr = models.ForeignKey(
-        'attributes.ProductAttr', verbose_name=_("Attribute"),
+        'attributes.ProductAttr',
+        verbose_name=_("Attribute"),
         related_name='values')
 
     product = models.ForeignKey(
-        'products.Product', verbose_name=_("Product"),
+        apps.get_app_config('attributes').product_model,
+        verbose_name=_("Product"),
         related_name='attr_values')
 
     objects = ProductAttrValueManager()
