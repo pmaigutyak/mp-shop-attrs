@@ -30,6 +30,42 @@ class ProductAdmin(ProductAdminMixin, ModelAdmin):
 
 ```
 
+## Usage
+
+```
+product = Product.objects.get(...)
+
+for attr_val in product.attr_values.visible():
+    
+    print(attr_val.attr.name)
+    print(attr_val.value)
+    
+    attr_val.value = 'example'
+    attr_val.save()
+```
+
+## Custom product models
+
+```
+from django.apps import AppConfig
+
+from attributes import AttributesAppConfig
+
+
+class CustomAttributesAppConfig(AttributesAppConfig):
+
+    product_model = 'custom_app.CustomProductModel'
+    product_category_model = 'custom_app.CustomProductCategoryModel'
+```
+
+settings.py
+```
+INSTALLED_APPS = [
+    ...
+    'CustomAttributesAppConfig',
+]
+```
+
 ### App requires this packages:
 * django
 * awesome-slugify
