@@ -91,7 +91,7 @@ class ProductAttrValue(models.Model):
     def as_html(self):
         return self.as_text()
 
-    def __unicode__(self):
+    def __str__(self):
         return '{}: {}'.format(self.attr.name, self.as_text())
 
     class Meta:

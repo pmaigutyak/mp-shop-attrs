@@ -62,7 +62,7 @@ class ProductAttr(models.Model):
     def full_slug(self):
         return 'attr_%s' % self.slug
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def save_value(self, product, value):
