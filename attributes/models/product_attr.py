@@ -5,36 +5,11 @@ from django.utils.translation import ugettext_lazy as _
 from attributes.constants import ATTR_TYPE_TEXT, ATTR_TYPE_SELECT, ATTR_TYPES
 
 
-class ProductAttrQuerySet(models.QuerySet):
-
-    def visible(self):
-        return self.filter(is_visible=True)
-
-    def for_filter(self):
-        return self.filter(type=ATTR_TYPE_SELECT, is_filter=True)
-
-
-class ProductAttrValueManager(models.Manager):
-
-    def get_queryset(self):
-        return ProductAttrQuerySet(self.model, using=self._db)
-
-    def visible(self):
-        return self.get_queryset().visible()
-
-    def for_filter(self):
-        return self.get_queryset().for_filter()
-
-
 class ProductAttr(models.Model):
 
     categories = models.ManyToManyField(
         'products.ProductCategory', related_name='attributes', blank=True,
         verbose_name=_("Product categories"))
-
-    products = models.ManyToManyField(
-        'products.Product', through='ProductAttributeValue',
-        verbose_name=_("Products"))
 
     name = models.CharField(_('Name'), max_length=128)
 

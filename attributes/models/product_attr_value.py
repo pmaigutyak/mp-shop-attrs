@@ -27,6 +27,9 @@ class ProductAttrValueQuerySet(models.QuerySet):
     def visible(self):
         return self.filter(attr__is_visible=True)
 
+    def for_filter(self):
+        return self.filter(type=ATTR_TYPE_SELECT, is_filter=True)
+
 
 class ProductAttrValueManager(models.Manager):
 
@@ -35,6 +38,9 @@ class ProductAttrValueManager(models.Manager):
 
     def visible(self):
         return self.get_queryset().visible()
+
+    def for_filter(self):
+        return self.get_queryset().for_filter()
 
 
 class ProductAttrValue(models.Model):
