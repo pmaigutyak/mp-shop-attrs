@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-18 16:46+0000\n"
+"POT-Creation-Date: 2018-06-14 17:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,126 +17,120 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: shop/attributes/admin/__init__.py:34
-msgid "Category"
+#: attributes/__init__.py:12
+msgid "Attributes"
 msgstr ""
 
-#: shop/attributes/admin/forms.py:27
-msgid "Option group is required for field type select"
+#: attributes/admin/__init__.py:35 attributes/models/product_attr.py:42
+msgid "Product categories"
 msgstr ""
 
-#: shop/attributes/admin/forms.py:95
-msgid " [New value]"
-msgstr ""
-
-#: shop/attributes/constants.py:11 shop/attributes/models.py:11
-msgid "Text"
-msgstr ""
-
-#: shop/attributes/constants.py:12 shop/attributes/models.py:12
-msgid "Integer"
-msgstr ""
-
-#: shop/attributes/constants.py:13
-msgid "True / False"
-msgstr ""
-
-#: shop/attributes/constants.py:14 shop/attributes/models.py:44
-msgid "Option"
-msgstr ""
-
-#: shop/attributes/models.py:13
-msgid "Boolean"
-msgstr ""
-
-#: shop/attributes/models.py:16
-msgid "Value option"
-msgstr ""
-
-#: shop/attributes/models.py:28 shop/attributes/models.py:61
-msgid "Name"
-msgstr ""
-
-#: shop/attributes/models.py:34
-msgid "Attribute option group"
-msgstr ""
-
-#: shop/attributes/models.py:35
-msgid "Attribute option groups"
-msgstr ""
-
-#: shop/attributes/models.py:42
-msgid "Group"
-msgstr ""
-
-#: shop/attributes/models.py:51
-msgid "Attribute option"
-msgstr ""
-
-#: shop/attributes/models.py:52
-msgid "Attribute options"
-msgstr ""
-
-#: shop/attributes/models.py:59
-msgid "Product category"
-msgstr ""
-
-#: shop/attributes/models.py:63
-msgid "Code"
-msgstr ""
-
-#: shop/attributes/models.py:68
+#: attributes/admin/__init__.py:40 attributes/models/product_attr.py:51
 msgid "Type"
 msgstr ""
 
-#: shop/attributes/models.py:72
-msgid "Option Group"
+#: attributes/admin/forms.py:82
+msgid "{} is required"
 msgstr ""
 
-#: shop/attributes/models.py:73
-msgid "Select an option group if using type \"Option\""
+#: attributes/admin/forms.py:104
+msgid " [New value]"
 msgstr ""
 
-#: shop/attributes/models.py:75
+#: attributes/constants.py:11 attributes/models/product_attr_value.py:11
+msgid "Text"
+msgstr ""
+
+#: attributes/constants.py:12 attributes/models/product_attr_value.py:12
+msgid "Integer"
+msgstr ""
+
+#: attributes/constants.py:13
+msgid "True / False"
+msgstr ""
+
+#: attributes/constants.py:14
+msgid "Options"
+msgstr ""
+
+#: attributes/models/product_attr.py:44
+#: attributes/models/product_attr_option.py:12
+msgid "Name"
+msgstr ""
+
+#: attributes/models/product_attr.py:46
+msgid "Code"
+msgstr ""
+
+#: attributes/models/product_attr.py:54
 msgid "Required"
 msgstr ""
 
-#: shop/attributes/models.py:77
+#: attributes/models/product_attr.py:55
+msgid "You will not be able to update product without filling this field"
+msgstr ""
+
+#: attributes/models/product_attr.py:59
+msgid "Is visible"
+msgstr ""
+
+#: attributes/models/product_attr.py:60
+msgid "Display this attribute for users"
+msgstr ""
+
+#: attributes/models/product_attr.py:63
 msgid "Is filter"
 msgstr ""
 
-#: shop/attributes/models.py:104
+#: attributes/models/product_attr.py:64
+msgid "Display this attribute in products filter"
+msgstr ""
+
+#: attributes/models/product_attr.py:91
 msgid "Product attribute"
 msgstr ""
 
-#: shop/attributes/models.py:105
+#: attributes/models/product_attr.py:92
 msgid "Product attributes"
 msgstr ""
 
-#: shop/attributes/models.py:111
+#: attributes/models/product_attr_option.py:10
+#: attributes/models/product_attr_value.py:45
 msgid "Attribute"
 msgstr ""
 
-#: shop/attributes/models.py:116
+#: attributes/models/product_attr_option.py:19
+msgid "Attribute option"
+msgstr ""
+
+#: attributes/models/product_attr_option.py:20
+msgid "Attribute options"
+msgstr ""
+
+#: attributes/models/product_attr_value.py:13
+msgid "Boolean"
+msgstr ""
+
+#: attributes/models/product_attr_value.py:16
+msgid "Option"
+msgstr ""
+
+#: attributes/models/product_attr_value.py:50
 msgid "Product"
 msgstr ""
 
-#: shop/attributes/models.py:152
+#: attributes/models/product_attr_value.py:90
 msgid "Yes"
 msgstr ""
 
-#: shop/attributes/models.py:152
+#: attributes/models/product_attr_value.py:90
 msgid "No"
 msgstr ""
 
-#: shop/attributes/models.py:165
+#: attributes/models/product_attr_value.py:103
 msgid "Product attribute value"
 msgstr ""
 
-#: shop/attributes/models.py:166
+#: attributes/models/product_attr_value.py:104
 msgid "Product attribute values"
-msgstr ""
-
-#: shop/attributes/models.py:228
-msgid "Attributes"
 msgstr ""

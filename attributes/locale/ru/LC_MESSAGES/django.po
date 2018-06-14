@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-18 16:46+0000\n"
+"POT-Creation-Date: 2018-06-14 17:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,126 +20,120 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: shop/attributes/admin/__init__.py:34
-msgid "Category"
-msgstr "Категория"
+#: attributes/__init__.py:12
+msgid "Attributes"
+msgstr "Атрибуты"
 
-#: shop/attributes/admin/forms.py:27
-msgid "Option group is required for field type select"
-msgstr "Вариант группы требуется для типа поля опций"
+#: attributes/admin/__init__.py:35 attributes/models/product_attr.py:42
+msgid "Product categories"
+msgstr "Категории товара"
 
-#: shop/attributes/admin/forms.py:95
-msgid " [New value]"
-msgstr " [Новое значение]"
-
-#: shop/attributes/constants.py:11 shop/attributes/models.py:11
-msgid "Text"
-msgstr "Текст"
-
-#: shop/attributes/constants.py:12 shop/attributes/models.py:12
-msgid "Integer"
-msgstr "Число"
-
-#: shop/attributes/constants.py:13
-msgid "True / False"
-msgstr "Да / Нет"
-
-#: shop/attributes/constants.py:14 shop/attributes/models.py:44
-msgid "Option"
-msgstr "Опция"
-
-#: shop/attributes/models.py:13
-msgid "Boolean"
-msgstr "Буливое значение"
-
-#: shop/attributes/models.py:16
-msgid "Value option"
-msgstr "Опция значения"
-
-#: shop/attributes/models.py:28 shop/attributes/models.py:61
-msgid "Name"
-msgstr "Имя"
-
-#: shop/attributes/models.py:34
-msgid "Attribute option group"
-msgstr "Группа опций атрибута"
-
-#: shop/attributes/models.py:35
-msgid "Attribute option groups"
-msgstr "Группы опций атрибутов"
-
-#: shop/attributes/models.py:42
-msgid "Group"
-msgstr "Группа"
-
-#: shop/attributes/models.py:51
-msgid "Attribute option"
-msgstr "Опция атрибута"
-
-#: shop/attributes/models.py:52
-msgid "Attribute options"
-msgstr "Опции атрибутов"
-
-#: shop/attributes/models.py:59
-msgid "Product category"
-msgstr "Категория товара"
-
-#: shop/attributes/models.py:63
-msgid "Code"
-msgstr "Код"
-
-#: shop/attributes/models.py:68
+#: attributes/admin/__init__.py:40 attributes/models/product_attr.py:51
 msgid "Type"
 msgstr "Тип"
 
-#: shop/attributes/models.py:72
-msgid "Option Group"
-msgstr "Группа опций"
+#: attributes/admin/forms.py:82
+msgid "{} is required"
+msgstr "{} бязательное"
 
-#: shop/attributes/models.py:73
-msgid "Select an option group if using type \"Option\""
-msgstr "Выберите вариант группы при использовании типа \"Опции\""
+#: attributes/admin/forms.py:104
+msgid " [New value]"
+msgstr " [Новое значение]"
 
-#: shop/attributes/models.py:75
+#: attributes/constants.py:11 attributes/models/product_attr_value.py:11
+msgid "Text"
+msgstr "Текст"
+
+#: attributes/constants.py:12 attributes/models/product_attr_value.py:12
+msgid "Integer"
+msgstr "Число"
+
+#: attributes/constants.py:13
+msgid "True / False"
+msgstr "Да / Нет"
+
+#: attributes/constants.py:14
+msgid "Options"
+msgstr "Опции"
+
+#: attributes/models/product_attr.py:44
+#: attributes/models/product_attr_option.py:12
+msgid "Name"
+msgstr "Имя"
+
+#: attributes/models/product_attr.py:46
+msgid "Code"
+msgstr "Код"
+
+#: attributes/models/product_attr.py:54
 msgid "Required"
 msgstr "Обязательное"
 
-#: shop/attributes/models.py:77
+#: attributes/models/product_attr.py:55
+msgid "You will not be able to update product without filling this field"
+msgstr "Вы не сможете оновить товар не заполнив это поле"
+
+#: attributes/models/product_attr.py:59
+msgid "Is visible"
+msgstr "Видимость"
+
+#: attributes/models/product_attr.py:60
+msgid "Display this attribute for users"
+msgstr "Отображать етот аттрибут для пользователей"
+
+#: attributes/models/product_attr.py:63
 msgid "Is filter"
 msgstr "Фильтр"
 
-#: shop/attributes/models.py:104
+#: attributes/models/product_attr.py:64
+msgid "Display this attribute in products filter"
+msgstr "Отображать этот аттрибут в фильтре товаров"
+
+#: attributes/models/product_attr.py:91
 msgid "Product attribute"
 msgstr "Атрибут товара"
 
-#: shop/attributes/models.py:105
+#: attributes/models/product_attr.py:92
 msgid "Product attributes"
 msgstr "Атрибуты товара"
 
-#: shop/attributes/models.py:111
+#: attributes/models/product_attr_option.py:10
+#: attributes/models/product_attr_value.py:45
 msgid "Attribute"
 msgstr "Атрибут"
 
-#: shop/attributes/models.py:116
+#: attributes/models/product_attr_option.py:19
+msgid "Attribute option"
+msgstr "Опция атрибута"
+
+#: attributes/models/product_attr_option.py:20
+msgid "Attribute options"
+msgstr "Опции атрибутов"
+
+#: attributes/models/product_attr_value.py:13
+msgid "Boolean"
+msgstr "Буливое значение"
+
+#: attributes/models/product_attr_value.py:16
+msgid "Option"
+msgstr "Опция"
+
+#: attributes/models/product_attr_value.py:50
 msgid "Product"
 msgstr "Товар"
 
-#: shop/attributes/models.py:152
+#: attributes/models/product_attr_value.py:90
 msgid "Yes"
 msgstr "Да"
 
-#: shop/attributes/models.py:152
+#: attributes/models/product_attr_value.py:90
 msgid "No"
 msgstr "Нет"
 
-#: shop/attributes/models.py:165
+#: attributes/models/product_attr_value.py:103
 msgid "Product attribute value"
 msgstr "Значение атрибута товара"
 
-#: shop/attributes/models.py:166
+#: attributes/models/product_attr_value.py:104
 msgid "Product attribute values"
 msgstr "Значение атрибутов товаров"
-
-#: shop/attributes/models.py:228
-msgid "Attributes"
-msgstr "Атрибуты"
