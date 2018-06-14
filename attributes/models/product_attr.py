@@ -18,7 +18,7 @@ class ProductAttrQuerySet(models.QuerySet):
         return self.filter(categories__in=categories)
 
 
-class ProductAttrValueManager(models.Manager):
+class ProductAttrManager(models.Manager):
 
     def get_queryset(self):
         return ProductAttrQuerySet(self.model, using=self._db)
@@ -62,6 +62,8 @@ class ProductAttr(models.Model):
     is_filter = models.BooleanField(
         _('Is filter'), default=False,
         help_text=_('Display this attribute in products filter'))
+
+    objects = ProductAttrManager()
 
     @property
     def has_options(self):
