@@ -23,7 +23,7 @@ def _get_attr_option_inline_base_class():
     return admin.TabularInline
 
 
-class ProductAttrOptionInline():
+class ProductAttrOptionInline(_get_attr_option_inline_base_class()):
 
     model = ProductAttrOption
     extra = 0
