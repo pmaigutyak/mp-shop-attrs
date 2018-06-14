@@ -1,14 +1,23 @@
 
+from importlib import import_module
+
+from django.apps import apps
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-
-from modeltranslation.admin import TranslationAdmin
 
 from attributes.admin.forms import ProductAttrForm, ProductAttrOptionInline
 from attributes.models import ProductAttr
 
 
-class ProductAttrAdmin(TranslationAdmin):
+def _get_product_attr_admin_base_class():
+
+    if apps.is_installed('modeltranslation'):
+        return import_module('modeltranslation.admin').TranslationAdmin
+
+    return admin.ModelAdmin
+
+
+class ProductAttrAdmin(_get_product_attr_admin_base_class()):
 
     form = ProductAttrForm
     inlines = [ProductAttrOptionInline]

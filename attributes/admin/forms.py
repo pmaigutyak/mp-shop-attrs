@@ -2,16 +2,29 @@
 from copy import deepcopy
 
 from django import forms
+from django.contrib import admin
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
 from slugify import slugify_url
 
-from modeltranslation.admin import TranslationTabularInline
-
 from attributes.constants import ATTR_TYPE_SELECT
 from attributes.models import ProductAttr, ProductAttrOption, VALUE_FIELDS
+
+
+def _get_attr_option_inline_base_class():
+
+    if apps.is_installed('modeltranslation'):
+        return import_module('modeltranslation.admin').TranslationTabularInline
+
+    return admin.TabularInline
+
+
+class ProductAttrOptionInline():
+
+    model = ProductAttrOption
+    extra = 0
 
 
 class ProductAttrForm(forms.ModelForm):
@@ -28,12 +41,6 @@ class ProductAttrForm(forms.ModelForm):
     class Meta:
         model = ProductAttr
         fields = '__all__'
-
-
-class ProductAttrOptionInline(TranslationTabularInline):
-
-    model = ProductAttrOption
-    extra = 0
 
 
 class ProductFormMixin(object):
