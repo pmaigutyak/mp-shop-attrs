@@ -8,6 +8,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.utils.functional import cached_property
 
 from slugify import slugify_url
 
@@ -59,19 +60,21 @@ class ProductFormMixin(object):
 
         super(ProductFormMixin, self).__init__(*args, **kwargs)
 
+        self._is_attr_fields_initialized = False
+
         if self.instance.pk:
             self._build_attr_fields()
-
-    def get_option_field_name(self, attr):
-        return 'option_' + attr.full_slug
 
     def clean(self):
         data = self.cleaned_data
 
-        for attr in self.instance.attr.all():
+        if not self._is_attr_fields_initialized:
+            return data
+
+        for attr in self._attributes:
 
             if attr.has_options:
-                new_option = data.get(self.get_option_field_name(attr))
+                new_option = data.get(self._get_option_field_name(attr))
 
                 if new_option:
                     option, c = attr.options.get_or_create(name=new_option)
@@ -85,10 +88,19 @@ class ProductFormMixin(object):
         return data
 
     def save(self, commit=True):
+
         product = super(ProductFormMixin, self).save(commit)
 
-        if 'category' in self.changed_data:
-            product.attr_values.all().delete()
+        if self._is_attr_fields_initialized:
+
+            if 'category' in self.changed_data:
+                product.attr_values.all().delete()
+
+            for attr in self._attributes:
+
+                if attr.full_slug in self.cleaned_data:
+                    value = self.cleaned_data[attr.full_slug]
+                    attr.save_value(self.instance, value)
 
         return product
 
@@ -96,13 +108,13 @@ class ProductFormMixin(object):
 
         fields = self.fields = deepcopy(self.base_fields)
 
-        for attr in self.instance.attr.all():
+        for attr in self._attributes:
 
             fields[attr.full_slug] = self._build_attr_field(attr)
 
             if attr.has_options:
                 label = attr.name + unicode(_(' [New value]'))
-                fields[self.get_option_field_name(attr)] = forms.CharField(
+                fields[self._get_option_field_name(attr)] = forms.CharField(
                     label=label, required=False)
 
             try:
@@ -112,15 +124,7 @@ class ProductFormMixin(object):
             else:
                 self.initial[attr.full_slug] = value
 
-    def _post_clean(self):
-
-        for attr in self.instance.attr.all():
-
-            if attr.full_slug in self.cleaned_data:
-                value = self.cleaned_data[attr.full_slug]
-                setattr(self.instance.attr, attr.slug, value)
-
-        super(ProductFormMixin, self)._post_clean()
+        self._is_attr_fields_initialized = True
 
     def _build_attr_field(self, attr):
 
@@ -139,3 +143,11 @@ class ProductFormMixin(object):
             return forms.ModelChoiceField(**kwargs)
 
         return VALUE_FIELDS[attr.type].formfield(**kwargs)
+
+    @cached_property
+    def _attributes(self):
+        return list(
+            ProductAttr.objects.for_categories([self.instance.category]))
+
+    def _get_option_field_name(self, attr):
+        return 'option_' + attr.full_slug
