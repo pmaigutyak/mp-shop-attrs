@@ -9,11 +9,15 @@ from attributes.constants import (
 
 
 ATTR_VALUE_TEXT = models.TextField(_('Text'), blank=True, null=True)
+
 ATTR_VALUE_INT = models.IntegerField(_('Integer'), blank=True, null=True)
+
 ATTR_VALUE_BOOL = models.NullBooleanField(_('Boolean'), blank=True)
+
 ATTR_VALUE_OPTION = models.ForeignKey(
     'attributes.ProductAttrOption', blank=True, null=True,
-    related_name='attr_values', verbose_name=_("Option"))
+    related_name='attr_values', verbose_name=_("Option"),
+    on_delete=models.SET_NULL)
 
 VALUE_FIELDS = {
     ATTR_TYPE_TEXT: ATTR_VALUE_TEXT,
@@ -43,12 +47,14 @@ class ProductAttrValue(models.Model):
     attr = models.ForeignKey(
         'attributes.ProductAttr',
         verbose_name=_("Attribute"),
-        related_name='values')
+        related_name='values',
+        on_delete=models.CASCADE)
 
     product = models.ForeignKey(
         apps.get_app_config('attributes').product_model,
         verbose_name=_("Product"),
-        related_name='attr_values')
+        related_name='attr_values',
+        on_delete=models.CASCADE)
 
     objects = ProductAttrValueManager()
 

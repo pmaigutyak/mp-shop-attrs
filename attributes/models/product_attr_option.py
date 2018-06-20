@@ -7,7 +7,7 @@ class ProductAttrOption(models.Model):
 
     attr = models.ForeignKey(
         'attributes.ProductAttr', related_name='options',
-        verbose_name=_("Attribute"))
+        verbose_name=_("Attribute"), on_delete=models.CASCADE)
 
     name = models.CharField(_('Name'), max_length=255)
 
