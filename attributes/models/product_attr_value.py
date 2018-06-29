@@ -95,7 +95,7 @@ class ProductAttrValue(models.Model):
 
             return _('Yes') if value else _('No')
 
-        return unicode('' if value is None else value)
+        return str('' if value is None else value)
 
     def as_html(self):
         return self.as_text()

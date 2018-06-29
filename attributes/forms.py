@@ -2,7 +2,7 @@
 from copy import deepcopy
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.functional import cached_property
 
@@ -89,7 +89,8 @@ class ProductFormMixin(object):
 
                 if not data.get(attr.full_slug) and attr.is_required:
                     raise ValidationError({
-                        attr.full_slug: _('{} is required').format(attr.name)
+                        attr.full_slug: ugettext('{} is required').format(
+                            attr.name)
                     })
 
         return data
@@ -120,7 +121,7 @@ class ProductFormMixin(object):
             fields[attr.full_slug] = self._build_attr_field(attr)
 
             if attr.has_options:
-                label = attr.name + unicode(_(' [New value]'))
+                label = attr.name + ugettext(' [New value]')
                 fields[self._get_option_field_name(attr)] = forms.CharField(
                     label=label, required=False)
 
