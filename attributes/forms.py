@@ -26,19 +26,35 @@ class FilterProductAttrForm(forms.Form):
 
     def set_options(self, products):
 
+        if not products:
+            self.fields = {}
+            return
+
         choices = {attr.id: [] for attr in self._attributes}
 
         attr_values = ProductAttrValue.objects.filter(
-            attribute__in=self._attributes, product__in=products)
+            attr__in=self._attributes, product__in=products
+        ).values_list('id', flat=True)
 
         options = ProductAttrOption.objects.filter(
-            attr__values__in=attr_values)
+            attr_values__in=attr_values).order_by('name').distinct()
 
         for option in options:
-            choices[option.attr_id].append(option)
+            choices[option.attr_id].append((option.id, option, ))
 
         for attr in self._attributes:
-            self.fields[attr.full_slug].choices = choices[attr.id]
+            if choices[attr.id]:
+                self.fields[attr.full_slug].choices = choices[attr.id]
+            else:
+                del self.fields[attr.full_slug]
+
+    def get_value_ids(self):
+        ids = []
+
+        for attr in self._attributes:
+            ids += self.data.getlist(attr.full_slug)
+
+        return ids
 
     def _get_available_options(self):
 
