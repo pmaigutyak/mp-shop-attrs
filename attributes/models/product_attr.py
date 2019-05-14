@@ -3,6 +3,8 @@ from django.apps import apps
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from ordered_model.models import OrderedModel
+
 from attributes.models.product_attr_value import ProductAttrValue
 from attributes.constants import ATTR_TYPE_TEXT, ATTR_TYPE_SELECT, ATTR_TYPES
 
@@ -34,7 +36,7 @@ class ProductAttrManager(models.Manager):
         return self.get_queryset().for_categories(categories)
 
 
-class ProductAttr(models.Model):
+class ProductAttr(OrderedModel):
 
     categories = models.ManyToManyField(
         apps.get_app_config('attributes').product_category_model,
@@ -103,6 +105,6 @@ class ProductAttr(models.Model):
             return val_obj
 
     class Meta:
-        ordering = ['name']
+        ordering = ['order']
         verbose_name = _('Product attribute')
         verbose_name_plural = _('Product attributes')

@@ -104,7 +104,7 @@ class ProductAttrValue(models.Model):
         return '{}: {}'.format(self.attr.name, self.as_text())
 
     class Meta:
-        ordering = ('attr__name', )
+        ordering = ('attr__order', )
         unique_together = ('attr', 'product')
         verbose_name = _('Product attribute value')
         verbose_name_plural = _('Product attribute values')
