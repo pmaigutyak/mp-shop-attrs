@@ -16,7 +16,6 @@ setup(
     name='django-mp-shop-attrs',
     version=__version__,
     description='Django shop attributes apps',
-    long_description=open('README.md').read(),
     author='Paul Maigutyak',
     author_email='pmaigutyak@gmail.com',
     url=url,
