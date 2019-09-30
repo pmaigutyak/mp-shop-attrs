@@ -3,13 +3,14 @@ from django.apps import apps
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from ordered_model.models import OrderedModel
+from ordered_model.models import (
+    OrderedModel, OrderedModelManager, OrderedModelQuerySet)
 
 from attributes.models.product_attr_value import ProductAttrValue
 from attributes.constants import ATTR_TYPE_TEXT, ATTR_TYPE_SELECT, ATTR_TYPES
 
 
-class ProductAttrQuerySet(models.QuerySet):
+class ProductAttrQuerySet(OrderedModelQuerySet):
 
     def visible(self):
         return self.filter(is_visible=True)
@@ -21,7 +22,7 @@ class ProductAttrQuerySet(models.QuerySet):
         return self.filter(categories__in=categories)
 
 
-class ProductAttrManager(models.Manager):
+class ProductAttrManager(OrderedModelManager):
 
     def get_queryset(self):
         return ProductAttrQuerySet(self.model, using=self._db)
