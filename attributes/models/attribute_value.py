@@ -1,22 +1,28 @@
 
-from django.apps import apps
 from django.db import models
 from django.utils import six
 from django.utils.translation import ugettext_lazy as _
 
+from attributes.managers import AttributeValueManager
+from attributes.settings import ATTRIBUTES_ENTRY_MODEL
 from attributes.constants import (
-    ATTR_TYPE_TEXT, ATTR_TYPE_INT, ATTR_TYPE_BOOL, ATTR_TYPE_SELECT)
+    ATTR_TYPE_TEXT,
+    ATTR_TYPE_INT,
+    ATTR_TYPE_BOOL,
+    ATTR_TYPE_SELECT)
 
 
-ATTR_VALUE_TEXT = models.TextField(_('Text'), blank=True, null=True)
+ATTR_VALUE_TEXT = models.TextField(blank=True, null=True)
 
-ATTR_VALUE_INT = models.IntegerField(_('Integer'), blank=True, null=True)
+ATTR_VALUE_INT = models.IntegerField(blank=True, null=True)
 
-ATTR_VALUE_BOOL = models.NullBooleanField(_('Boolean'), blank=True)
+ATTR_VALUE_BOOL = models.NullBooleanField(blank=True)
 
 ATTR_VALUE_OPTION = models.ForeignKey(
-    'attributes.ProductAttrOption', blank=True, null=True,
-    related_name='attr_values', verbose_name=_("Option"),
+    'attributes.AttributeOption',
+    blank=True,
+    null=True,
+    related_name='attr_values',
     on_delete=models.SET_NULL)
 
 VALUE_FIELDS = {
@@ -27,36 +33,19 @@ VALUE_FIELDS = {
 }
 
 
-class ProductAttrValueQuerySet(models.QuerySet):
-
-    def visible(self):
-        return self.filter(attr__is_visible=True)
-
-
-class ProductAttrValueManager(models.Manager):
-
-    def get_queryset(self):
-        return ProductAttrValueQuerySet(self.model, using=self._db)
-
-    def visible(self):
-        return self.get_queryset().visible()
-
-
-class ProductAttrValue(models.Model):
+class AttributeValue(models.Model):
 
     attr = models.ForeignKey(
-        'attributes.ProductAttr',
-        verbose_name=_("Attribute"),
+        'attributes.Attribute',
         related_name='values',
         on_delete=models.CASCADE)
 
-    product = models.ForeignKey(
-        apps.get_app_config('attributes').product_model,
-        verbose_name=_("Product"),
+    entry = models.ForeignKey(
+        ATTRIBUTES_ENTRY_MODEL,
         related_name='attr_values',
         on_delete=models.CASCADE)
 
-    objects = ProductAttrValueManager()
+    objects = AttributeValueManager()
 
     value_text = ATTR_VALUE_TEXT
     value_int = ATTR_VALUE_INT
@@ -105,6 +94,4 @@ class ProductAttrValue(models.Model):
 
     class Meta:
         ordering = ('attr__order', )
-        unique_together = ('attr', 'product')
-        verbose_name = _('Product attribute value')
-        verbose_name_plural = _('Product attribute values')
+        unique_together = ('attr', 'entry')

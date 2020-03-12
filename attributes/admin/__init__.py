@@ -7,11 +7,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from ordered_model.admin import OrderedModelAdmin
 
-from attributes.admin.forms import ProductAttrForm, ProductAttrOptionInline
-from attributes.models import ProductAttr
+from attributes.admin.forms import AttributeForm, AttributeOptionInline
+from attributes.models import Attribute
 
 
-def _get_product_attr_admin_base_class():
+def _get_attribute_admin_base_class():
 
     if apps.is_installed('modeltranslation'):
         return import_module('modeltranslation.admin').TranslationAdmin
@@ -19,11 +19,11 @@ def _get_product_attr_admin_base_class():
     return admin.ModelAdmin
 
 
-class ProductAttrAdmin(
-        OrderedModelAdmin, _get_product_attr_admin_base_class()):
+@admin.register(Attribute)
+class AttributeAdmin(OrderedModelAdmin, _get_attribute_admin_base_class()):
 
-    form = ProductAttrForm
-    inlines = [ProductAttrOptionInline]
+    form = AttributeForm
+    inlines = [AttributeOptionInline]
 
     list_display = [
         'name', 'get_category_list', 'slug', 'get_type', 'is_required',
@@ -35,7 +35,7 @@ class ProductAttrAdmin(
     def get_category_list(self, item):
         return ', '.join([c.name for c in item.categories.all()])
 
-    get_category_list.short_description = _('Product categories')
+    get_category_list.short_description = _('Categories')
 
     def get_type(self, item):
         return item.get_type_display()
@@ -43,7 +43,7 @@ class ProductAttrAdmin(
     get_type.short_description = _('Type')
 
 
-class ProductAdminMixin(object):
+class EntryAdminMixin(object):
 
     """
     Workaround of django admin form dynamically loaded fields bug.
@@ -58,8 +58,4 @@ class ProductAdminMixin(object):
         context['adminform'] = admin.helpers.AdminForm(
             form, fieldsets, self.prepopulated_fields, model_admin=self)
 
-        return super(ProductAdminMixin, self).render_change_form(
-            request, context, **kwargs)
-
-
-admin.site.register(ProductAttr, ProductAttrAdmin)
+        return super().render_change_form(request, context, **kwargs)

@@ -3,11 +3,13 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
-class ProductAttrOption(models.Model):
+class AttributeOption(models.Model):
 
     attr = models.ForeignKey(
-        'attributes.ProductAttr', related_name='options',
-        verbose_name=_("Attribute"), on_delete=models.CASCADE)
+        'attributes.Attribute',
+        related_name='options',
+        verbose_name=_("Attribute"),
+        on_delete=models.CASCADE)
 
     name = models.CharField(_('Name'), max_length=255)
 

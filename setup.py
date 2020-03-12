@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 
-__version__ = '1.4'
+__version__ = '2.0'
 
 
 with open('requirements.txt') as f:
@@ -15,7 +15,7 @@ url = 'https://github.com/pmaigutyak/mp-shop-attrs'
 setup(
     name='django-mp-shop-attrs',
     version=__version__,
-    description='Django shop attributes apps',
+    description='Django attributes apps',
     author='Paul Maigutyak',
     author_email='pmaigutyak@gmail.com',
     url=url,

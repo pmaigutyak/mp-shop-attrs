@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-14 17:10+0000\n"
+"POT-Creation-Date: 2020-03-12 17:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,31 +20,23 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: attributes/__init__.py:12
+#: attributes/__init__.py:8 attributes/models/attribute.py:113
 msgid "Attributes"
 msgstr "Атрибуты"
 
-#: attributes/admin/__init__.py:35 attributes/models/product_attr.py:42
-msgid "Product categories"
-msgstr "Категории товара"
+#: attributes/admin/__init__.py:38 attributes/models/attribute.py:48
+msgid "Categories"
+msgstr "Категории"
 
-#: attributes/admin/__init__.py:40 attributes/models/product_attr.py:51
+#: attributes/admin/__init__.py:43 attributes/models/attribute.py:57
 msgid "Type"
 msgstr "Тип"
 
-#: attributes/admin/forms.py:82
-msgid "{} is required"
-msgstr "{} бязательное"
-
-#: attributes/admin/forms.py:104
-msgid " [New value]"
-msgstr " [Новое значение]"
-
-#: attributes/constants.py:11 attributes/models/product_attr_value.py:11
+#: attributes/constants.py:11
 msgid "Text"
 msgstr "Текст"
 
-#: attributes/constants.py:12 attributes/models/product_attr_value.py:12
+#: attributes/constants.py:12
 msgid "Integer"
 msgstr "Число"
 
@@ -56,84 +48,62 @@ msgstr "Да / Нет"
 msgid "Options"
 msgstr "Опции"
 
-#: attributes/models/product_attr.py:44
-#: attributes/models/product_attr_option.py:12
+#: attributes/forms.py:111
+msgid "{} is required"
+msgstr "{} бязательное"
+
+#: attributes/forms.py:143
+msgid " [New value]"
+msgstr " [Новое значение]"
+
+#: attributes/models/attribute.py:50 attributes/models/attribute_option.py:14
 msgid "Name"
 msgstr "Имя"
 
-#: attributes/models/product_attr.py:46
+#: attributes/models/attribute.py:52
 msgid "Code"
 msgstr "Код"
 
-#: attributes/models/product_attr.py:54
+#: attributes/models/attribute.py:60
 msgid "Required"
 msgstr "Обязательное"
 
-#: attributes/models/product_attr.py:55
-msgid "You will not be able to update product without filling this field"
-msgstr "Вы не сможете оновить товар не заполнив это поле"
+#: attributes/models/attribute.py:61
+msgid "You will not be able to update record without filling this field"
+msgstr "Вы не сможете оновить запись не заполнив это поле"
 
-#: attributes/models/product_attr.py:59
+#: attributes/models/attribute.py:65
 msgid "Is visible"
 msgstr "Видимость"
 
-#: attributes/models/product_attr.py:60
+#: attributes/models/attribute.py:66
 msgid "Display this attribute for users"
 msgstr "Отображать етот аттрибут для пользователей"
 
-#: attributes/models/product_attr.py:63
+#: attributes/models/attribute.py:69
 msgid "Is filter"
 msgstr "Фильтр"
 
-#: attributes/models/product_attr.py:64
-msgid "Display this attribute in products filter"
-msgstr "Отображать этот аттрибут в фильтре товаров"
+#: attributes/models/attribute.py:70
+msgid "Display this attribute in records filter"
+msgstr "Отображать этот аттрибут в фильтре записей"
 
-#: attributes/models/product_attr.py:91
-msgid "Product attribute"
-msgstr "Атрибут товара"
-
-#: attributes/models/product_attr.py:92
-msgid "Product attributes"
-msgstr "Атрибуты товара"
-
-#: attributes/models/product_attr_option.py:10
-#: attributes/models/product_attr_value.py:45
+#: attributes/models/attribute.py:112 attributes/models/attribute_option.py:11
 msgid "Attribute"
 msgstr "Атрибут"
 
-#: attributes/models/product_attr_option.py:19
+#: attributes/models/attribute_option.py:21
 msgid "Attribute option"
 msgstr "Опция атрибута"
 
-#: attributes/models/product_attr_option.py:20
+#: attributes/models/attribute_option.py:22
 msgid "Attribute options"
 msgstr "Опции атрибутов"
 
-#: attributes/models/product_attr_value.py:13
-msgid "Boolean"
-msgstr "Буливое значение"
-
-#: attributes/models/product_attr_value.py:16
-msgid "Option"
-msgstr "Опция"
-
-#: attributes/models/product_attr_value.py:50
-msgid "Product"
-msgstr "Товар"
-
-#: attributes/models/product_attr_value.py:90
+#: attributes/models/attribute_value.py:85
 msgid "Yes"
 msgstr "Да"
 
-#: attributes/models/product_attr_value.py:90
+#: attributes/models/attribute_value.py:85
 msgid "No"
 msgstr "Нет"
-
-#: attributes/models/product_attr_value.py:103
-msgid "Product attribute value"
-msgstr "Значение атрибута товара"
-
-#: attributes/models/product_attr_value.py:104
-msgid "Product attribute values"
-msgstr "Значение атрибутов товаров"

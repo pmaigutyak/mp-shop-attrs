@@ -1,16 +1,18 @@
 
-from django.apps import apps
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from ordered_model.models import (
-    OrderedModel, OrderedModelManager, OrderedModelQuerySet)
+    OrderedModel,
+    OrderedModelManager,
+    OrderedModelQuerySet)
 
-from attributes.models.product_attr_value import ProductAttrValue
+from attributes.models.attribute_value import AttributeValue
+from attributes.settings import ATTRIBUTES_CATEGORY_MODEL
 from attributes.constants import ATTR_TYPE_TEXT, ATTR_TYPE_SELECT, ATTR_TYPES
 
 
-class ProductAttrQuerySet(OrderedModelQuerySet):
+class AttributeQuerySet(OrderedModelQuerySet):
 
     def visible(self):
         return self.filter(is_visible=True)
@@ -22,10 +24,10 @@ class ProductAttrQuerySet(OrderedModelQuerySet):
         return self.filter(categories__in=categories)
 
 
-class ProductAttrManager(OrderedModelManager):
+class AttributeManager(OrderedModelManager):
 
     def get_queryset(self):
-        return ProductAttrQuerySet(self.model, using=self._db)
+        return AttributeQuerySet(self.model, using=self._db)
 
     def visible(self):
         return self.get_queryset().visible()
@@ -37,37 +39,48 @@ class ProductAttrManager(OrderedModelManager):
         return self.get_queryset().for_categories(categories)
 
 
-class ProductAttr(OrderedModel):
+class Attribute(OrderedModel):
 
     categories = models.ManyToManyField(
-        apps.get_app_config('attributes').product_category_model,
+        ATTRIBUTES_CATEGORY_MODEL,
         related_name='attributes',
         blank=True,
-        verbose_name=_("Product categories"))
+        verbose_name=_("Categories"))
 
-    name = models.CharField(_('Name'), max_length=128)
+    name = models.CharField(
+        _('Name'),
+        max_length=128)
 
-    slug = models.CharField(_('Code'), max_length=255, db_index=True,
-                            blank=True, null=False)
+    slug = models.CharField(
+        _('Code'),
+        max_length=255,
+        db_index=True,
+        blank=True,
+        null=False)
 
     type = models.PositiveSmallIntegerField(
-        choices=ATTR_TYPES, default=ATTR_TYPE_TEXT,
-        null=False, verbose_name=_("Type"))
+        choices=ATTR_TYPES,
+        default=ATTR_TYPE_TEXT,
+        null=False,
+        verbose_name=_("Type"))
 
     is_required = models.BooleanField(
-        _('Required'), default=False,
-        help_text=_('You will not be able to update product without filling '
+        _('Required'),
+        default=False,
+        help_text=_('You will not be able to update record without filling '
                     'this field'))
 
     is_visible = models.BooleanField(
-        _('Is visible'), default=True,
+        _('Is visible'),
+        default=True,
         help_text=_('Display this attribute for users'))
 
     is_filter = models.BooleanField(
-        _('Is filter'), default=False,
-        help_text=_('Display this attribute in products filter'))
+        _('Is filter'),
+        default=False,
+        help_text=_('Display this attribute in records filter'))
 
-    objects = ProductAttrManager()
+    objects = AttributeManager()
 
     @property
     def has_options(self):
@@ -80,10 +93,10 @@ class ProductAttr(OrderedModel):
     def __str__(self):
         return self.name
 
-    def save_value(self, product, value):
+    def save_value(self, entry, value):
 
         try:
-            val_obj = ProductAttrValue.objects.get(product=product, attr=self)
+            val_obj = AttributeValue.objects.get(entry=entry, attr=self)
 
             if not value:
                 val_obj.delete()
@@ -94,12 +107,12 @@ class ProductAttr(OrderedModel):
 
             return val_obj
 
-        except ProductAttrValue.DoesNotExist:
+        except AttributeValue.DoesNotExist:
 
             if not value:
                 return None
 
-            val_obj = ProductAttrValue(product=product, attr=self)
+            val_obj = AttributeValue(entry=entry, attr=self)
             val_obj.value = value
             val_obj.save()
 
@@ -107,5 +120,5 @@ class ProductAttr(OrderedModel):
 
     class Meta:
         ordering = ['order']
-        verbose_name = _('Product attribute')
-        verbose_name_plural = _('Product attributes')
+        verbose_name = _('Attribute')
+        verbose_name_plural = _('Attributes')

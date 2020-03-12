@@ -8,7 +8,7 @@ from django.conf import settings
 
 from slugify import slugify_url
 
-from attributes.models import ProductAttr, ProductAttrOption
+from attributes.models import Attribute, AttributeOption
 
 
 def _get_attr_option_inline_base_class():
@@ -19,13 +19,13 @@ def _get_attr_option_inline_base_class():
     return admin.TabularInline
 
 
-class ProductAttrOptionInline(_get_attr_option_inline_base_class()):
+class AttributeOptionInline(_get_attr_option_inline_base_class()):
 
-    model = ProductAttrOption
+    model = AttributeOption
     extra = 0
 
 
-class ProductAttrForm(forms.ModelForm):
+class AttributeForm(forms.ModelForm):
 
     def clean_slug(self):
 
@@ -42,8 +42,13 @@ class ProductAttrForm(forms.ModelForm):
         return slugify_url(name, separator='_')
 
     class Meta:
-        model = ProductAttr
+        model = Attribute
         fields = [
-            'categories', 'name', 'slug', 'type', 'is_required', 'is_visible',
+            'categories',
+            'name',
+            'slug',
+            'type',
+            'is_required',
+            'is_visible',
             'is_filter'
         ]

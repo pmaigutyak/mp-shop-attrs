@@ -8,35 +8,38 @@ from django.utils.functional import cached_property
 
 from attributes.constants import ATTR_TYPE_SELECT
 from attributes.models import (
-    ProductAttr, ProductAttrValue, ProductAttrOption, VALUE_FIELDS)
+    Attribute,
+    AttributeValue,
+    AttributeOption,
+    VALUE_FIELDS)
 
 
-class FilterProductAttrForm(forms.Form):
+class FilterAttributeForm(forms.Form):
 
     def __init__(self, attributes, *args, **kwargs):
 
         self._attributes = attributes
 
-        super(FilterProductAttrForm, self).__init__(*args, **kwargs)
+        super(FilterAttributeForm, self).__init__(*args, **kwargs)
 
         for attr in self._attributes:
             self.fields[attr.full_slug] = forms.MultipleChoiceField(
                 widget=forms.CheckboxSelectMultiple, label=attr.name,
                 required=False)
 
-    def set_options(self, products):
+    def set_options(self, entries):
 
-        if not products:
+        if not entries:
             self.fields = {}
             return
 
         choices = {attr.id: [] for attr in self._attributes}
 
-        attr_values = ProductAttrValue.objects.filter(
-            attr__in=self._attributes, product__in=products
+        attr_values = AttributeValue.objects.filter(
+            attr__in=self._attributes, entry__in=entries
         ).values_list('id', flat=True)
 
-        options = ProductAttrOption.objects.filter(
+        options = AttributeOption.objects.filter(
             attr_values__in=attr_values).order_by('name').distinct()
 
         for option in options:
@@ -62,8 +65,8 @@ class FilterProductAttrForm(forms.Form):
 
         options = {attr.pk: [] for attr in self._attributes}
 
-        attr_values = ProductAttrValue.objects.filter(
-            attribute__in=self._attributes, product__in=self._products
+        attr_values = AttributeValue.objects.filter(
+            attribute__in=self._attributes, entry__in=self._entries
         ).select_related('value_option')
 
         for value in attr_values:
@@ -77,11 +80,11 @@ class FilterProductAttrForm(forms.Form):
         return options
 
 
-class ProductFormMixin(object):
+class EntryFormMixin(object):
 
     def __init__(self, *args, **kwargs):
 
-        super(ProductFormMixin, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self._is_attr_fields_initialized = False
 
@@ -113,12 +116,12 @@ class ProductFormMixin(object):
 
     def save(self, commit=True):
 
-        product = super(ProductFormMixin, self).save(commit)
+        entry = super().save(commit)
 
         if self._is_attr_fields_initialized:
 
             if 'category' in self.changed_data:
-                product.attr_values.all().delete()
+                entry.attr_values.all().delete()
 
             for attr in self._attributes:
 
@@ -126,7 +129,7 @@ class ProductFormMixin(object):
                     value = self.cleaned_data[attr.full_slug]
                     attr.save_value(self.instance, value)
 
-        return product
+        return entry
 
     def _build_attr_fields(self):
 
@@ -170,8 +173,7 @@ class ProductFormMixin(object):
 
     @cached_property
     def _attributes(self):
-        return list(
-            ProductAttr.objects.for_categories([self.instance.category]))
+        return list(Attribute.objects.for_categories([self.instance.category]))
 
     def _get_option_field_name(self, attr):
         return 'option_' + attr.full_slug
